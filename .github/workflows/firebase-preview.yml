@@ -1,0 +1,38 @@
+name: firebase preview
+
+# Deploys a preview of every pull request to a Firebase Hosting preview
+# channel and comments the url on the pull request. Does nothing until
+# Firebase is configured for the repository:
+#
+# 1. repository variable FIREBASE_PROJECT_ID: your Firebase project id
+# 2. repository secret FIREBASE_SERVICE_ACCOUNT: a service account key,
+#    `firebase init hosting:github` creates one for you
+# 3. optional repository variable SITE_URL: your production url, used for
+#    absolute urls in feeds, sitemap and social metadata
+
+on: pull_request
+
+jobs:
+  preview:
+    if: ${{ vars.FIREBASE_PROJECT_ID != '' && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          URL: ${{ vars.SITE_URL }}
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ${{ vars.FIREBASE_PROJECT_ID }}
+          expires: 7d
