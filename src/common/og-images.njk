@@ -32,6 +32,8 @@ eleventyExcludeFromCollections: true
     {% set verticalStartingPoint = 210 %}
     {% elseif numberOfLines == 5 %}
     {% set verticalStartingPoint = 170 %}
+    {% else %}
+    {% set verticalStartingPoint = 170 %}
   {% endif %}
 
   <rect id="bg" width="100%" height="100%" opacity="1" fill="{{ background }}" />
