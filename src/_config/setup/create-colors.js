@@ -51,6 +51,7 @@ const neutralSteps = [
 const colorTokens = {
   title: colorsBase.title,
   description: colorsBase.description,
+  prefix: colorsBase.prefix || 'color',
   items: []
 };
 
