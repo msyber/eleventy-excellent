@@ -80,7 +80,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addFilter('formatDate', filters.formatDate);
   eleventyConfig.addFilter('markdownFormat', filters.markdownFormat);
   eleventyConfig.addFilter('splitlines', filters.splitlines);
-  eleventyConfig.addFilter('striptags', filters.striptags);
+  eleventyConfig.addFilter('escapeJson', filters.escapeJson);
   eleventyConfig.addFilter('shuffle', filters.shuffleArray);
   eleventyConfig.addFilter('alphabetic', filters.sortAlphabetically);
   eleventyConfig.addFilter('slugify', filters.slugifyString);

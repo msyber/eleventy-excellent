@@ -3,7 +3,7 @@ import {markdownFormat} from './filters/markdown-format.js';
 import {shuffleArray} from './filters/sort-random.js';
 import {sortAlphabetically} from './filters/sort-alphabetic.js';
 import {splitlines} from './filters/splitlines.js';
-import {striptags} from './filters/striptags.js';
+import {escapeJson} from './filters/escape-json.js';
 import {slugifyString} from './filters/slugify.js';
 
 export default {
@@ -11,7 +11,7 @@ export default {
   formatDate,
   markdownFormat,
   splitlines,
-  striptags,
+  escapeJson,
   shuffleArray,
   sortAlphabetically,
   slugifyString

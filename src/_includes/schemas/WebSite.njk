@@ -6,8 +6,8 @@
         "@type": "WebSite",
         "@id": "{{ meta.url }}#website",
         "url": "{{ meta.url }}",
-        "name": "{{ meta.siteName }}",
-        "description": "{{ meta.siteDescription }}",
+        "name": "{{ meta.siteName | escapeJson | safe }}",
+        "description": "{{ meta.siteDescription | escapeJson | safe }}",
         "inLanguage": "{{ meta.locale }}"
       }
     ]
