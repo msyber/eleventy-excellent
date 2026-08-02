@@ -1,12 +1,10 @@
 import fetch from '@11ty/eleventy-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 const dataPath = './src/_data/builtwith.json';
-const screenshotDir = path.join(
-  path.dirname(new URL(import.meta.url).pathname),
-  '../../assets/images/screenshots'
-);
+const screenshotDir = fileURLToPath(new URL('../../assets/images/screenshots', import.meta.url));
 
 async function fetchScreenshot(url, filePath) {
   const waitCondition = 'wait:2';
