@@ -27,18 +27,33 @@ const buildCss = async (inputPath, outputPaths) => {
   return result.css;
 };
 
+const assertUniqueBasenames = fileList => {
+  const seen = new Map();
+  for (const filePath of fileList) {
+    const baseName = path.basename(filePath);
+    if (seen.has(baseName)) {
+      throw new Error(
+        `Duplicate file name "${baseName}" (${seen.get(baseName)} and ${filePath}), outputs would overwrite each other`
+      );
+    }
+    seen.set(baseName, filePath);
+  }
+};
+
 export const buildAllCss = async () => {
   const tasks = [];
 
   tasks.push(buildCss('src/assets/css/global/global.css', ['src/_includes/css/global.css']));
 
   const localCssFiles = await fg(['src/assets/css/local/**/*.css']);
+  assertUniqueBasenames(['src/assets/css/global/global.css', ...localCssFiles]);
   for (const inputPath of localCssFiles) {
     const baseName = path.basename(inputPath);
     tasks.push(buildCss(inputPath, [`src/_includes/css/${baseName}`]));
   }
 
   const componentCssFiles = await fg(['src/assets/css/components/**/*.css']);
+  assertUniqueBasenames(componentCssFiles);
   for (const inputPath of componentCssFiles) {
     const baseName = path.basename(inputPath);
     tasks.push(buildCss(inputPath, [`dist/assets/css/components/${baseName}`]));
